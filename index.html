@@ -188,6 +188,7 @@ const QUESTIONS = [
   ['buy','Where do you buy ingredients and packaging (store names)? Receipts help the Recipe costs page.']
  ]},
  {g:'Orders and customers', items:[
+  ['places','Where do you sell: Detroit, other Wayne County cities, Oakland County, Macomb County? Which events are coming up after October 28?'],
   ['how','How do orders come in now (DMs, texts, comments, in person)? How many a week? How do you keep track?'],
   ['pickup','Pickup, delivery, or both? Delivery area and fee?'],
   ['prepay','Do customers pay up front? Do you have an order cutoff time?'],
@@ -240,14 +241,15 @@ const CHECK = [
  ]},
  {g:'Set up the business', items:[
   ['b_name','Check the name is free: Michigan business entity search and a trademark search','Do this before printing more flyers or registering anything.',''],
-  ['b_struct','Choose: sole proprietor with an assumed name (DBA), or an LLC','Assumed name for one person: $10 at the Oakland County Clerk, signed before a notary. LLC: $50 to form with the state, then $25 a year.','https://www.oaklandcountymi.gov/government/clerk-register-of-deeds/life-events-services/assumed-names-co-partnerships'],
+  ['b_struct','Choose: sole proprietor with an assumed name (DBA), or an LLC','Assumed name: $16 at the Wayne County Clerk (mail-in, notarized), plus $10 each in Macomb and Oakland if you sell there; good for 5 years. LLC: $50 to form with the state, then $25 a year.','https://www.waynecountymi.gov/Services/Business/Assumed-Names'],
   ['b_ein','Get an EIN from the IRS','Free on irs.gov. Never pay a website for it.','https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number'],
   ['b_bank','Open a business bank account and keep business money separate','Chime\'s account agreement says its checking account is not for business use, and Apple Cash terms bar business use too.',''],
   ['b_books','Keep every receipt and log sales and expenses here each week','','']
  ]},
  {g:'Get legal to sell food', items:[
-  ['l_path','Pick the licensing path for a refrigerated dessert','Michigan\'s cottage food law (home kitchen) does not cover banana pudding: it leaves out foods that need refrigeration and dairy products. The path is a licensed kitchen plus your own license.','https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make'],
-  ['l_kitchen','Visit a licensed shared-use kitchen (Oakland County has several)','Kitchens ask for your license, insurance and often a ServSafe certificate.',''],
+  ['l_path','Pick the licensing path for a refrigerated dessert','Michigan\'s cottage food law (home kitchen) does not cover banana pudding: it leaves out foods that need refrigeration and dairy products. The path is a licensed kitchen plus your own license; with a Detroit kitchen, that license comes from the Detroit Health Department.','https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make'],
+  ['l_kitchen','Visit a licensed shared kitchen in Detroit (East Warren, Detroit Food Commons, Brightmoor, EAG, Eastern Market)','Kitchens ask for your own license, insurance and often a ServSafe certificate. The business plan lists prices.','https://easternmarket.org/shared-kitchens/'],
+  ['l_events','For every other event: a temporary license from the health department where the event is','Detroit $284 (apply 10 days ahead), the rest of Wayne County $249 (10 days), Oakland $87 (2 working days), Macomb $158 (5 business days). If you do many events, one statewide transitory food unit license can replace them.','https://detroitmi.gov/departments/detroit-health-department/programs-and-services/food-safety/dhd-temporary-events-and-licenses'],
   ['l_cert','Food safety manager certificate (for example ServSafe Manager)','Required for a county food service license; renewed every 5 years.','https://www.michigan.gov/mdard/food-dairy/retail-industry-resources/training'],
   ['l_insure','Food liability insurance quote','Shared kitchens can require $1,000,000 coverage naming the kitchen.','https://www.fliprogram.com/coverage-details'],
   ['l_label','Labels: product name, ingredients, allergens, your business name','',''],
@@ -456,6 +458,7 @@ PAGES.start = {
         <li>Payments listed: Zelle, Chime, Apple Pay.</li>
         <li>Next event: Pop-Up Shop / Boo Bash at the gym, <b>Wednesday, October 28, 4 PM to 7 PM</b>, Novi. October 28, 2026 is a Wednesday, so the flyer date checks out. The gym spells its name <b>Powerhouse Gym</b>, and its own page gives the address as <b>44125 12 Mile Rd E-123</b>, Novi, MI 48377 (the flyer says "Power House Gym" and leaves out E-123).</li>
         <li>Audience: about 40,000 followers (which platform, and how many are local, is on the Questions page).</li>
+        <li>Home base: Detroit. You sell at events in Detroit, other Wayne County cities, Oakland County and Macomb County, so each event follows the rules of the place it is in.</li>
       </ul>
     </section>
     <section class="card warn">
@@ -463,6 +466,7 @@ PAGES.start = {
       <ul class="facts">
         <li><b>Banana pudding cannot be sold as home-made food in Michigan.</b> The cottage food law, which lets people sell some foods from a home kitchen, leaves out foods that need refrigeration and dairy products (<a href="https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make" target="_blank" rel="noopener">MDARD</a>). The legal path is a licensed kitchen plus your own license.</li>
         <li><b>For October 28 you need your own Oakland County temporary food license,</b> and the pudding has to be made in a licensed kitchen, not at home. The fee is $87 if you apply two working days ahead (by Monday, October 26), $99 after that, $113 at the event. The gym's paperwork does not cover vendors. Call the <a href="https://www.oaklandcountymi.gov/community/health/public-health-services/environmental-health/food-safety" target="_blank" rel="noopener">Oakland County Health Division</a> first and ask exactly what they need.</li>
+        <li><b>Every other event needs a license from the health department where it is,</b> and home-made food is barred everywhere: Detroit $284 (apply 10 days ahead), the rest of Wayne County $249 (10 days), Oakland $87 (2 working days), Macomb $158 (5 business days). At about $3.50 profit a cup, a Detroit event must sell about 81 cups just to pay for its license. Weekly pre-orders need no event license.</li>
         <li><b>The QR code on the order card does not scan.</b> A computer QR reader found the square but could not read it in 16 tries. It looks drawn by the image tool, not encoded. A working code is ready once your handle is confirmed.</li>
         <li><b>Card payments at the table.</b> Zelle and Chime only work for customers who already use them, and Chime's and Apple Cash's terms say personal use only. Square's free plan takes cards and Apple Pay by tapping on an iPhone (2.6% plus 15 cents a payment when checked October 21).</li>
       </ul>
@@ -698,7 +702,7 @@ PAGES.money = {
     <section class="card pinkish"><h1>Money</h1><p class="muted">Sales come in from Pop-up mode and paid orders. Add every expense with its receipt. This is a running picture, not a tax return.</p></section>
     <section class="card"><h2>So far</h2><div data-out="totals"></div>
       <div class="grid2" style="margin-top:8px">${field('Set aside for income tax (%)', inp('settings.setAsidePct', {num:true}))}</div>
-      <p class="note">Self-employed people often set aside a share of profit for income and self-employment tax. Pick the number with a tax preparer.</p>
+      <p class="note">Self-employed people often set aside a share of profit for income and self-employment tax. As a Detroit resident you also owe Detroit city income tax of 2.4% on net business profit. Pick the number with a tax preparer.</p>
     </section>
     <section class="card">
       <h2>Add an expense</h2>
