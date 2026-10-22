@@ -114,6 +114,9 @@ tr.total td{font-weight:800;border-top:2px solid var(--line)}
 .chk{display:grid;grid-template-columns:1.6fr 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
 .chk-c{display:grid;grid-template-columns:130px 1fr;gap:6px}
 .chk-t .why{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.btn.small{min-height:38px;padding:6px 12px;font-size:14px}
+.contact{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);align-items:center}
+.contact .btns{justify-content:flex-end}
 footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);font-size:13px}
 .only-print{display:none}
 @media (max-width:700px){
@@ -128,6 +131,8 @@ footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);fo
   .chk{grid-template-columns:1fr}
   .order{grid-template-columns:1fr}
   .order .ctl{justify-content:flex-start}
+  .contact{grid-template-columns:1fr}
+  .contact .btns{justify-content:flex-start}
   .steps .btn{min-width:0;width:100%}
 }
 @media (max-width:420px){ .grid2{grid-template-columns:1fr} }
@@ -161,7 +166,7 @@ const STATUSES = ['New','Paid','Made','Picked up','Canceled'];
 const CATS = ['Ingredients','Packaging','Event fees','Licenses and permits','Equipment','Marketing','Other'];
 const UNITS = ['oz','lb','g','fl oz','cup','each'];
 const CHK_STATUS = ['To do','Doing','Done','N/A'];
-const TABS = [['start','Start'],['interview','Questions'],['costing','Recipe costs'],['popup','Pop-up'],['orders','Orders'],['money','Money'],['checklist','Checklist'],['summary','Summary']];
+const TABS = [['start','Start'],['interview','Questions'],['costing','Recipe costs'],['popup','Pop-up'],['orders','Orders'],['money','Money'],['checklist','Checklist'],['contacts','Contacts'],['summary','Summary']];
 
 /* Questions for the working session. Ids are stable: answers are stored by id. */
 const QUESTIONS = [
@@ -248,7 +253,7 @@ const CHECK = [
  ]},
  {g:'Get legal to sell food', items:[
   ['l_path','Pick the licensing path for a refrigerated dessert','Michigan\'s cottage food law (home kitchen) does not cover banana pudding: it leaves out foods that need refrigeration and dairy products. The path is a licensed kitchen plus your own license; with a Detroit kitchen, that license comes from the Detroit Health Department.','https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make'],
-  ['l_kitchen','Visit a licensed shared kitchen in Detroit (East Warren, Detroit Food Commons, Brightmoor, EAG, Eastern Market)','Kitchens ask for your own license, insurance and often a ServSafe certificate. The business plan lists prices.','https://easternmarket.org/shared-kitchens/'],
+  ['l_kitchen','Visit a licensed shared kitchen: options in Detroit, other Wayne County cities, Oakland and Macomb','The Contacts page lists 21 kitchens with prices, miles from downtown and tap-to-call numbers. Kitchens ask for your own license, insurance and often a ServSafe certificate.','https://easternmarket.org/shared-kitchens/'],
   ['l_events','For every other event: a temporary license from the health department where the event is','Detroit $284 (apply 10 days ahead), the rest of Wayne County $249 (10 days), Oakland $87 (2 working days), Macomb $158 (5 business days). If you do many events, one statewide transitory food unit license can replace them.','https://detroitmi.gov/departments/detroit-health-department/programs-and-services/food-safety/dhd-temporary-events-and-licenses'],
   ['l_cert','Food safety manager certificate (for example ServSafe Manager)','Required for a county food service license; renewed every 5 years.','https://www.michigan.gov/mdard/food-dairy/retail-industry-resources/training'],
   ['l_insure','Food liability insurance quote','Shared kitchens can require $1,000,000 coverage naming the kitchen.','https://www.fliprogram.com/coverage-details'],
@@ -274,6 +279,9 @@ const PREP = [
  ['p7',0,'Set up 30 minutes early; check the cooler temperature every hour'],
  ['p8',0,'After: count leftovers and money; check the tally below matches']
 ];
+
+/* Contacts: generated from data/solutions/sade-banana-pudding/kitchens.json (checked 2026-10-22). */
+const CONTACTS = {"kitchens": [{"area": "Detroit", "name": "Eastern Market Shed 5 Kitchen", "address": "2934 Russell St., Detroit 48207", "miles": 1.2, "email": "shed5kitchen@easternmarket.org", "price": "Not listed; ask", "notes": "Incubator with business help"}, {"area": "Detroit", "name": "EAG Kitchen", "address": "2910 E. Jefferson Ave. (rear), Detroit 48207", "miles": 1.5, "phone": "313-452-8294", "email": "info@eagkitchen.com", "price": "Hourly packages; $75 fee, $225 deposit", "notes": "Walk-in cooler; renter needs her own Detroit Health Department license"}, {"area": "Detroit", "name": "Detroit Food Commons (Kujichagulia Kitchens)", "address": "8324 Woodward Ave., Detroit 48202", "miles": 3.5, "email": "info@dbcfsn.org", "price": "$42.50/hr; $75 fee, $100 deposit", "notes": "Four kitchens; online rental application"}, {"area": "Detroit", "name": "East Warren Kitchen (E. Warren Development Corp.)", "address": "16835 E. Warren Ave., Detroit 48224", "miles": 7.7, "email": "kitchen@ewarren.org", "price": "$18/hr cold line, $27/hr hot line and bakery (May 2025 report)", "notes": "A cold line suits pudding assembly; online application"}, {"area": "Detroit", "name": "Fellowship Chapel Community Kitchen", "address": "7707 W. Outer Dr., Detroit 48235", "miles": 10.4, "phone": "313-347-2820", "ext": "131", "email": "fellowshipchapelrentals@yahoo.com", "price": "Not listed; ask", "notes": "12-burner stove, cold and dry storage"}, {"area": "Detroit", "name": "Rosedale Park Community Kitchen", "address": "18445 Scarsdale, Detroit 48223", "miles": 10.5, "phone": "313-837-3416", "price": "Not listed; ask", "notes": "Combi oven, cold and dry storage"}, {"area": "Detroit", "name": "Brightmoor Artisans Collective", "address": "22735 Fenkell St., Detroit 48223", "miles": 12.2, "email": "brightmoorartisans@gmail.com", "price": "$25/hr; $150 monthly minimum for members (listing may be old)", "notes": "Takes MDARD-licensed renters only"}, {"area": "Wayne County outside Detroit", "name": "The D Loft Commercial Kitchen", "address": "9427 Joseph Campau Ave., Hamtramck 48212 (its own site; Eastern Market lists a Detroit address)", "miles": 4.2, "phone": "313-879-0750", "email": "thedloftkitchen@gmail.com", "price": "$40/hr full kitchen, $25/hr prep; members $25/$15; commissary from $295/month", "notes": "Requires her own license, a certified manager, $1M/$2M insurance"}, {"area": "Wayne County outside Detroit", "name": "One New Humanity", "address": "10218 Joseph Campau Ave., Hamtramck 48212", "miles": 4.2, "email": "info@onenewhumanity.org", "price": "Not listed; ask", "notes": ""}, {"area": "Wayne County outside Detroit", "name": "Christ Church Commons", "address": "61 Grosse Pointe Blvd., Grosse Pointe Farms 48236", "miles": 8.5, "phone": "313-885-4841", "phone_note": "church office", "email": "Ewilde@ChristChurchGP.org", "price": "$30/hr on a 6-month lease, 10 hours a month minimum; $50 background check; $250 deposit", "notes": "Licensed shared and commissary kitchen; 24/7 access"}, {"area": "Wayne County outside Detroit", "name": "Homestead Kitchen", "address": "8036 N. Wayne Rd., Westland 48185", "miles": 17.4, "email": "info@homesteadkitchen.net", "price": "Not listed; online application", "notes": "Also offers a staffed retail storefront"}, {"area": "Wayne County outside Detroit", "name": "Livonia Kitchen", "address": "Five Mile Rd., Livonia 48154", "miles": 19.6, "contact_url": "https://www.thekitchendoor.com/kitchen-rental/livonia-kitchen", "price": "$25/hr", "notes": "MDARD-certified; open Saturday to Monday all day and Tuesdays"}, {"area": "Oakland County", "name": "Licensed kitchen in Hazel Park", "address": "777 E. Woodward Heights Blvd., Hazel Park 48030", "miles": 10.0, "contact_url": "https://www.thekitchendoor.com/kitchen-rental/licensed-kitchen-in-hazel-park-mi", "price": "Whole kitchen from $2,750/month plus utilities; $1,500 deposit", "notes": "A whole-kitchen lease for later, at volume"}, {"area": "Oakland County", "name": "Capital Kitchen", "address": "12930 Capital St., Oak Park 48237", "miles": 11.0, "phone": "248-615-2955", "price": "$15 to $30/hr by time and shift; $400 minimum", "notes": "Ask for Paul Gabriel"}, {"area": "Oakland County", "name": "Oak Park Event Hub Kitchen", "address": "14100 Oak Park Blvd., Oak Park 48237", "miles": 11.8, "phone": "248-691-7469", "price": "20 hrs/month $400, 40 hrs $700 (packages)", "notes": "Requires business license, insurance, ServSafe, a health license"}, {"area": "Oakland County", "name": "St. John's Episcopal Church kitchen", "address": "26998 Woodward Ave., Royal Oak 48067", "miles": 12.3, "phone": "248-546-1255", "price": "Not listed; ask", "notes": "12-burner stove, mixer, cold and dry storage"}, {"area": "Oakland County", "name": "The Culinary Studio", "address": "29673 Northwestern Hwy., Southfield 48034", "miles": 18.3, "phone": "248-353-2500", "email": "info@myculinarystudio.com", "price": "10 hrs/month for $250 minimum; $300 deposit (listing)", "notes": "Cold and dry storage"}, {"area": "Oakland County", "name": "The Flavor Lab", "address": "812 N. Main St., Rochester 48307", "miles": 24.9, "phone": "248-652-0195", "email": "info@theflavorlab.kitchen", "price": "Members from $27/hr; one-off $75/hr", "notes": "Requires $1,000,000 insurance naming the kitchen"}, {"area": "Oakland County", "name": "Mesa Kitchen", "address": "526 N. Telegraph Rd., Pontiac 48341", "miles": 26.0, "phone": "586-488-1974", "email": "mesakitchenmi@gmail.com", "price": "$25/hr; 5 hours a month minimum", "notes": "Licensed shared kitchen and incubator; ServSafe training"}, {"area": "Oakland County", "name": "HOPE Kitchen", "address": "20 E. Walton Blvd., Pontiac 48340", "miles": 27.1, "email": "chef@oaklandhope.org", "price": "From $25/hr per station; $400 refundable deposit", "notes": "Food safety manager classes on site"}, {"area": "Macomb County", "name": "Baldwin House Lakeside 2 Kitchen", "address": "15821 19 Mile Rd., Clinton Township 48038", "miles": 19.9, "contact_url": "https://www.thekitchendoor.com/kitchen-rental/baldwin-house-lakeside-2-kitchen", "price": "From $300 per 4 hours; $1,000 minimum for one-time use", "notes": "Late afternoons and weekends"}], "agencies": [{"group": "Event and kitchen licenses", "name": "Detroit Health Department, Food Safety", "phone": "313-876-0135"}, {"group": "Event and kitchen licenses", "name": "Wayne County Environmental Health (outside Detroit)", "phone": "734-727-7400"}, {"group": "Event and kitchen licenses", "name": "Oakland County Health Division", "phone": "248-858-1280"}, {"group": "Event and kitchen licenses", "name": "Macomb County Health Department, Environmental Health", "phone": "586-469-5236"}, {"group": "Event and kitchen licenses", "name": "MDARD food licensing (state)", "phone": "800-292-3939"}, {"group": "Business setup", "name": "Wayne County Clerk, assumed names", "phone": "313-967-6938"}, {"group": "Business setup", "name": "Oakland County Clerk, assumed names", "phone": "248-858-0569"}, {"group": "Business setup", "name": "Macomb County Clerk, business registration", "phone": "586-469-5205"}, {"group": "Business setup", "name": "Detroit BSEED business licensing (event vendor license)", "phone": "313-224-3179"}, {"group": "Taxes", "name": "Michigan Treasury, City of Detroit income tax", "phone": "517-636-5829"}, {"group": "October 28 event", "name": "Powerhouse Gym, Novi", "phone": "248-344-7522"}]};
 
 /* ---------- state ---------- */
 const uid = () => Math.random().toString(36).slice(2,10);
@@ -740,6 +748,23 @@ PAGES.checklist = {
         </div>`).join('')}</section>`).join('');
   },
   outputs(){ const t = $('[data-out="ctotal"]'); if(t) t.textContent = `${cSettled()} of ${allC().length} settled.`; }
+};
+
+PAGES.contacts = {
+  render(){
+    const telHref = (p, ext) => 'tel:+1' + p.replace(/\D/g, '') + (ext ? ',' + ext : '');
+    const call = (p, ext, note) => `<a class="btn small" href="${telHref(p, ext)}">Call ${h(p)}${ext ? ' ext. ' + h(ext) : ''}</a>${note ? ` <span class="muted small">${h(note)}</span>` : ''}`;
+    const groups = [...new Set(CONTACTS.agencies.map(a => a.group))];
+    const areas = ['Detroit', 'Wayne County outside Detroit', 'Oakland County', 'Macomb County'];
+    return `
+    <section class="card pinkish"><h1>Contacts</h1><p class="muted">Tap a number to call or Email to write. Kitchen prices are what each kitchen showed on October 21 and 22, 2026; check before booking. Miles are straight-line from downtown Detroit.</p></section>
+    <section class="card"><h2>Who to call</h2>${groups.map(g => `<h3>${h(g)}</h3>${CONTACTS.agencies.filter(a => a.group === g).map(a => `<div class="contact"><div><b>${h(a.name)}</b></div><div class="btns">${call(a.phone)}</div></div>`).join('')}`).join('')}</section>
+    ${areas.map(ar => `<section class="card"><h2>Kitchens: ${h(ar)}</h2>${CONTACTS.kitchens.filter(k => k.area === ar).sort((a, b) => a.miles - b.miles).map(k => `
+      <div class="contact">
+        <div><b>${h(k.name)}</b> <span class="muted small">${Math.round(k.miles)} mi</span><br><span class="muted small">${h(k.address)}</span><br><span class="small">${h(k.price)}${k.notes ? ' · ' + h(k.notes) : ''}</span></div>
+        <div class="btns">${k.phone ? call(k.phone, k.ext, k.phone_note) : ''}${k.email ? `<a class="btn small ghost" href="mailto:${h(k.email)}">Email</a>` : ''}${!k.phone && !k.email && k.contact_url ? `<a class="btn small ghost" href="${h(k.contact_url)}" target="_blank" rel="noopener">Message via listing</a>` : ''}</div>
+      </div>`).join('')}</section>`).join('')}`;
+  }
 };
 
 PAGES.summary = {
