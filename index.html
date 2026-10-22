@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sirenity's Banana Pudding · Business Workbook</title>
+<meta name="theme-color" content="#D81B7A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#D81B7A; --pink-dark:#B0145F; --pink-2:#F6C3DC; --pink-3:#FDEDF5;
+  --gold:#A8742A; --gold-2:#F1DDB4; --gold-3:#FBF2E1;
+  --cream:#FBF5EC; --ink:#3E2614; --muted:#76563F; --line:#EAD8C3;
+  --ok:#2F7A4E; --ok-bg:#E6F4EC; --warn:#A6450A; --warn-bg:#FFF1E4; --card:#FFFFFF;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--cream);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--pink-dark)}
+.top{background:linear-gradient(135deg,#E3207F,#B9145F);color:#fff;padding:14px 16px 12px}
+.top-in{max-width:980px;margin:0 auto}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand .script{font-family:"Dancing Script",cursive;font-size:30px;line-height:1;color:#FCE3A6}
+.brand .bp{font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:17px}
+.sub{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;margin-top:4px}
+.save{font-size:12px;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:99px}
+.save.bad{background:#fff;color:var(--warn);font-weight:700}
+nav.tabs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.tabs .in{max-width:980px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:6px 8px;scrollbar-width:none}
+nav.tabs .in::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);font:600 14px Inter,system-ui,sans-serif;padding:8px 12px;border-radius:99px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--pink);color:#fff}
+main{max-width:980px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(62,38,20,.05)}
+.card.warn{background:var(--warn-bg);border-color:#F5CFA9}
+.card.pinkish{background:var(--pink-3);border-color:var(--pink-2)}
+h1{font-size:22px;margin:0 0 6px;line-height:1.25}
+h2{font-size:18px;margin:0 0 10px;line-height:1.3}
+h3{font-size:15px;margin:14px 0 8px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+p{margin:0 0 10px}
+.muted{color:var(--muted);font-size:14px}
+.small{font-size:13px}
+ul.facts{margin:0;padding-left:18px}
+ul.facts li{margin:3px 0}
+input,select,textarea{font:inherit;font-size:16px;color:inherit;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;width:100%;min-height:42px}
+textarea{resize:vertical;min-height:64px;line-height:1.4}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--pink-2);outline-offset:1px;border-color:var(--pink)}
+input[type=checkbox]{width:22px;height:22px;min-height:0;accent-color:var(--pink);flex:0 0 auto}
+label.q{display:block;margin:0 0 14px}
+label.q>span{display:block;font-weight:600;margin-bottom:5px;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--pink);color:#fff;border:0;border-radius:10px;padding:9px 14px;font:700 15px Inter,system-ui,sans-serif;cursor:pointer;min-height:42px;text-decoration:none}
+.btn:hover{background:var(--pink-dark)}
+.btn.ghost{background:#fff;color:var(--pink-dark);border:1px solid var(--pink-2)}
+.btn.ghost:hover{background:var(--pink-3)}
+.btn.danger{background:#fff;color:var(--warn);border:1px solid #F0C29A}
+.btn.x{background:transparent;color:var(--muted);border:1px solid var(--line);padding:0;width:42px;font-size:20px;line-height:1}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.field>span{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:3px}
+.check{display:flex;align-items:center;gap:10px;font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0}
+.tile{background:var(--pink-3);border:1px solid var(--pink-2);border-radius:12px;padding:10px 12px}
+.tile.gold{background:var(--gold-3);border-color:var(--gold-2)}
+.tile.ok{background:var(--ok-bg);border-color:#BFE2CD}
+.tile.bad{background:var(--warn-bg);border-color:#F5CFA9}
+.tile small{display:block;color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.tile b{display:block;font-size:22px;line-height:1.2;margin-top:2px}
+.note{font-size:13px;color:var(--muted);margin-top:6px}
+.flag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--warn-bg);color:var(--warn);border:1px solid #F5CFA9}
+.flag.ok{background:var(--ok-bg);color:var(--ok);border-color:#BFE2CD}
+.count{font-size:13px;font-weight:600;color:var(--muted);margin-left:6px}
+.steps{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.steps li{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.steps .btn{min-width:200px;justify-content:flex-start}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:800;border-top:2px solid var(--line)}
+/* ingredient and packaging rows */
+.rows{display:grid;gap:0}
+.row{display:grid;gap:6px;align-items:end;padding:8px 0;border-bottom:1px dashed var(--line)}
+.row.ing{grid-template-columns:2.2fr 1fr 1fr .9fr 1fr .9fr 42px}
+.row.pack{grid-template-columns:2.4fr 1fr 1fr 1fr 42px}
+.row.head{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding-bottom:2px;border-bottom:0}
+.row label>span{display:none;font-size:12px;color:var(--muted);font-weight:600}
+.row .out{min-height:42px;display:flex;align-items:center;justify-content:flex-end;font-weight:700;font-variant-numeric:tabular-nums}
+.prod-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-bottom:6px}
+/* pop-up tally */
+.methods{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.chip{border:1px solid var(--pink-2);background:#fff;color:var(--pink-dark);border-radius:99px;padding:8px 14px;font:700 15px Inter,system-ui,sans-serif;cursor:pointer;min-height:42px}
+.chip[aria-pressed="true"]{background:var(--pink);color:#fff;border-color:var(--pink)}
+.sellgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.sell{border:0;border-radius:16px;background:var(--pink);color:#fff;padding:16px;text-align:left;cursor:pointer;font:inherit;min-height:96px}
+.sell:active{transform:scale(.98)}
+.sell b{display:block;font-size:19px}
+.sell span{display:block;font-size:14px;opacity:.95}
+.sell.out{background:#9C8B7E}
+.prep{display:grid;gap:6px}
+.prep label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line)}
+.prep .when{flex:0 0 108px;font-weight:700;color:var(--pink-dark);font-size:14px}
+.prep .past .when{color:var(--muted)}
+/* orders and checklist */
+.order{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.order .meta{font-size:14px;color:var(--muted)}
+.order .ctl{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.order .ctl select{width:auto}
+.chk{display:grid;grid-template-columns:1.6fr 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.chk-c{display:grid;grid-template-columns:130px 1fr;gap:6px}
+.chk-t .why{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);font-size:13px}
+.only-print{display:none}
+@media (max-width:700px){
+  .grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row.ing,.row.pack{grid-template-columns:1fr 1fr}
+  .row.ing>label:first-child,.row.pack>label:first-child{grid-column:1 / -1}
+  .row.head{display:none}
+  .row label>span{display:block}
+  .row .out{justify-content:flex-start}
+  .prod-head{grid-template-columns:1fr 1fr}
+  .prod-head>label:first-child{grid-column:1 / -1}
+  .chk{grid-template-columns:1fr}
+  .order{grid-template-columns:1fr}
+  .order .ctl{justify-content:flex-start}
+  .steps .btn{min-width:0;width:100%}
+}
+@media (max-width:420px){ .grid2{grid-template-columns:1fr} }
+@media print{
+  nav.tabs,.noprint,.save{display:none!important}
+  .only-print{display:block}
+  body{background:#fff;font-size:12px}
+  .top{background:#fff;color:var(--ink);border-bottom:2px solid var(--pink)}
+  .brand .script{color:var(--pink)}
+  .card{border:1px solid #ddd;box-shadow:none;break-inside:avoid}
+  main{padding:0}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><span class="script">Sirenity's</span><span class="bp">Banana Pudding</span></div>
+    <div class="sub"><span>Business Workbook for Sade · version 0</span><span id="saveState" class="save">Starting</span></div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections"><div class="in" id="tabs"></div></nav>
+<main id="view"><noscript><div class="card warn">This workbook needs JavaScript turned on.</div></noscript></main>
+<footer>Everything you type stays in this browser on this device; nothing you type is sent anywhere (the page only downloads its fonts). Use Export on the Start or Summary page to keep a copy. Built by KS Solutions.</footer>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<script>
+'use strict';
+const KEY = 'sbp_workbook_v1';
+const METHODS = ['Cash','Zelle','Chime','Apple Pay','Card','Other'];
+const STATUSES = ['New','Paid','Made','Picked up','Canceled'];
+const CATS = ['Ingredients','Packaging','Event fees','Licenses and permits','Equipment','Marketing','Other'];
+const UNITS = ['oz','lb','g','fl oz','cup','each'];
+const CHK_STATUS = ['To do','Doing','Done','N/A'];
+const TABS = [['start','Start'],['interview','Questions'],['costing','Recipe costs'],['popup','Pop-up'],['orders','Orders'],['money','Money'],['checklist','Checklist'],['summary','Summary']];
+
+/* Questions for the working session. Ids are stable: answers are stored by id. */
+const QUESTIONS = [
+ {g:'You and the brand', items:[
+  ['legal','Your legal name for paperwork, and what you like to be called.'],
+  ['bizname','Business name: is "Sirenity\'s Banana Pudding" final? Who or what is Sirenity? Is that spelling final?'],
+  ['handles','Exact Instagram and TikTok handles (the flyers show @shayy.slay) and the follower count on each.'],
+  ['local','Where your followers live: in Instagram or TikTok insights, what share are in Metro Detroit?'],
+  ['since','How long have you been selling, and about how many cups a week right now?'],
+  ['goal','Goal for the next 12 months: extra money, replace a job, or a storefront or wholesale? What monthly profit would feel like a win?'],
+  ['hours','Hours a week you can give the business, and who helps you (paid or not).']
+ ]},
+ {g:'Products', items:[
+  ['sizes','Cup sizes (oz) and the price of each. Is $7 the smallest? What else is on the menu (bigger cups, trays, party pans)?'],
+  ['flavors','Other flavors you make now or want to make (seasonal, holiday).'],
+  ['catering','Do you take trays, catering or event orders? What do you charge?'],
+  ['allergens','Allergens in each recipe (milk, eggs, wheat, soy, nuts, anything else).'],
+  ['shelf','How long does a cup stay good in the fridge, in your experience? When do the bananas start to brown?']
+ ]},
+ {g:'Kitchen and making it', items:[
+  ['where','Where do you make it now (your kitchen, someone else\'s, a rented kitchen)?'],
+  ['batch','Biggest batch you can make at once: how many cups, and how many hours from start to cleanup?'],
+  ['fridge','How many cups can your fridge hold at once?'],
+  ['buy','Where do you buy ingredients and packaging (store names)? Receipts help the Recipe costs page.']
+ ]},
+ {g:'Orders and customers', items:[
+  ['how','How do orders come in now (DMs, texts, comments, in person)? How many a week? How do you keep track?'],
+  ['pickup','Pickup, delivery, or both? Delivery area and fee?'],
+  ['prepay','Do customers pay up front? Do you have an order cutoff time?'],
+  ['repeat','About how many of your customers come back for more?'],
+  ['asks','What do customers ask for or complain about most?']
+ ]},
+ {g:'Money', items:[
+  ['paid','How you get paid now (Zelle, Chime, Apple Pay, cash, other) and into which account: personal or separate?'],
+  ['applepay','When the payment card says Apple Pay, do you mean Apple Cash sent person to person, or tapping a card at a reader?'],
+  ['bank','Do you have a business bank account? Which bank?'],
+  ['spend','About how much did you spend last month on ingredients and packaging?'],
+  ['register','Anything registered yet: LLC, assumed name (DBA), EIN, sales tax license?'],
+  ['salestax','Do you charge or set aside sales tax now?']
+ ]},
+ {g:'Licenses and food safety', items:[
+  ['cert','Any food handler or food safety manager certificate (for example ServSafe)?'],
+  ['license','Any food license or permit so far?'],
+  ['insurance','Any business or food liability insurance?']
+ ]},
+ {g:'The pop-up on October 28 (Powerhouse Gym, Novi)', items:[
+  ['gymcontact','Your contact at the gym, and how you got booked (vendor fee, a percentage, free)?'],
+  ['gymlicense','Did the gym or organizer say anything about a health department permit for vendors?'],
+  ['gymsetup','Indoors or outdoors? Table, power, fridge or freezer access?'],
+  ['cupsplan','How many cups of each flavor are you planning to bring?'],
+  ['cold','How will you keep cups cold for the drive plus 3 hours (cooler, ice packs, thermometer)?'],
+  ['cards','How will people pay at the table if they only have a card?'],
+  ['helper','Who is working the table with you?']
+ ]},
+ {g:'The app', items:[
+  ['phone','Your phone: iPhone or Android?'],
+  ['pain','The most annoying part of running the business right now?'],
+  ['orderpage','Would you want customers to order and pay through a link instead of DMs?'],
+  ['access','Who else should be able to use the app (helper, family)?']
+ ]}
+];
+
+/* Launch checklist. [id, item, why, official link] */
+const OAKLAND_FOOD = 'https://www.oaklandcountymi.gov/community/health/public-health-services/environmental-health/food-safety';
+const CHECK = [
+ {g:'Before October 28', items:[
+  ['c_permit','Get your own Oakland County temporary food license for October 28 (apply by Monday, October 26 for the $87 rate)','The county says every food vendor at an event needs one; the gym\'s paperwork does not cover vendors. After two working days before the event the fee goes to $99, and $113 at the event.',OAKLAND_FOOD],
+  ['c_kitchen','Make the October 28 batch in a licensed kitchen, not at home','The county will not license home-made food at an event; food made elsewhere must come from a licensed kitchen under a commissary agreement. Ask the county exactly what it needs.',OAKLAND_FOOD],
+  ['c_qr','Replace the QR code on the order card with one that scans','A computer QR reader could not read the one on the flyer. A working draft is ready once the handle is confirmed.',''],
+  ['c_handle','Confirm the Instagram handle printed on the flyers is exactly right','The flyers were made with an image tool, which can misspell text.',''],
+  ['c_cards','Set up a way to take cards and Apple Pay at the table','Zelle and Chime need the customer to have them. Square\'s free plan takes cards and Apple Pay by tapping on an iPhone, at 2.6% plus 15 cents a payment (Square, October 21).','https://squareup.com/us/en/payments/tap-to-pay'],
+  ['c_cold','Cooler, ice packs and a food thermometer: keep cups at 41°F or colder','41°F is the cold-holding line in the FDA Food Code that Michigan follows for foods like this.',''],
+  ['c_count','Decide cups per flavor on the Pop-up page and shop from its list','',''],
+  ['c_sign','Price sign that matches what you charge, and whether tax is included','',''],
+  ['c_change','Cash box with change','','']
+ ]},
+ {g:'Set up the business', items:[
+  ['b_name','Check the name is free: Michigan business entity search and a trademark search','Do this before printing more flyers or registering anything.',''],
+  ['b_struct','Choose: sole proprietor with an assumed name (DBA), or an LLC','Assumed name for one person: $10 at the Oakland County Clerk, signed before a notary. LLC: $50 to form with the state, then $25 a year.','https://www.oaklandcountymi.gov/government/clerk-register-of-deeds/life-events-services/assumed-names-co-partnerships'],
+  ['b_ein','Get an EIN from the IRS','Free on irs.gov. Never pay a website for it.','https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number'],
+  ['b_bank','Open a business bank account and keep business money separate','Chime\'s account agreement says its checking account is not for business use, and Apple Cash terms bar business use too.',''],
+  ['b_books','Keep every receipt and log sales and expenses here each week','','']
+ ]},
+ {g:'Get legal to sell food', items:[
+  ['l_path','Pick the licensing path for a refrigerated dessert','Michigan\'s cottage food law (home kitchen) does not cover banana pudding: it leaves out foods that need refrigeration and dairy products. The path is a licensed kitchen plus your own license.','https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make'],
+  ['l_kitchen','Visit a licensed shared-use kitchen (Oakland County has several)','Kitchens ask for your license, insurance and often a ServSafe certificate.',''],
+  ['l_cert','Food safety manager certificate (for example ServSafe Manager)','Required for a county food service license; renewed every 5 years.','https://www.michigan.gov/mdard/food-dairy/retail-industry-resources/training'],
+  ['l_insure','Food liability insurance quote','Shared kitchens can require $1,000,000 coverage naming the kitchen.','https://www.fliprogram.com/coverage-details'],
+  ['l_label','Labels: product name, ingredients, allergens, your business name','',''],
+  ['l_tax','Register for the free Michigan sales tax license','A cup sold with a spoon counts as prepared food, taxed at 6% (Treasury bulletin RAB 2026-2).','https://www.michigan.gov/taxes/business-taxes/sales-use-tax/information/sales-tax-license-faq']
+ ]},
+ {g:'Online and orders', items:[
+  ['o_pro','Instagram professional account; check where followers live','',''],
+  ['o_link','One order link in your bio instead of DMs','',''],
+  ['o_rhythm','Pick a weekly rhythm: menu post, order cutoff, make day, pickup window','',''],
+  ['o_thanks','Thanksgiving (Thursday, November 26) pre-order plan: dates, cutoff, tray sizes','','']
+ ]}
+];
+
+/* Pop-up prep timeline: [id, days before the event, task] */
+const PREP = [
+ ['p1',-6,'Call the Oakland County Health Division: temporary food license, and where the pudding must be made'],
+ ['p2',-5,'Book licensed kitchen time; set up card and Apple Pay at the table; print a QR code that scans'],
+ ['p3',-3,'Print the price sign; get a cash box and change'],
+ ['p4',-2,'Last day for the $87 temporary license rate; shop from the list on this page'],
+ ['p5',-1,'Make the batches in the licensed kitchen (night before or morning of: your call, for banana freshness)'],
+ ['p6',0,'Pack the cooler with ice packs and a thermometer; check cups are 41°F or colder before you leave'],
+ ['p7',0,'Set up 30 minutes early; check the cooler temperature every hour'],
+ ['p8',0,'After: count leftovers and money; check the tally below matches']
+];
+
+/* ---------- state ---------- */
+const uid = () => Math.random().toString(36).slice(2,10);
+const L = (name, unit='oz') => ({id:uid(), name, pkgPrice:'', pkgAmt:'', unit, used:''});
+const P = name => ({id:uid(), name, packPrice:'', packCount:''});
+const blankOrder = () => ({name:'', contact:'', date:'', time:'', items:{}, paid:false, method:'Zelle', notes:''});
+const blankExpense = () => ({date:new Date().toISOString().slice(0,10), what:'', category:'Ingredients', amount:''});
+function defaults(){
+  const base = top => [L('Vanilla wafers or cookies'), L('Instant vanilla pudding mix'), L('Sweetened condensed milk'), L('Whipped topping or heavy cream'), L('Cream cheese'), L('Milk','fl oz'), L('Bananas','each'), ...(top ? [L('Cookie for the top','each')] : [])];
+  return {
+    version:1, updatedAt:null, answers:{},
+    products:[
+      {id:'p_reg', name:'Regular Banana Pudding', price:'7', sizeOz:'', batchYield:'', lines:base(true)},
+      {id:'p_str', name:'Strawberry Banana Pudding', price:'7', sizeOz:'', batchYield:'', lines:[...base(false), L('Strawberries')]}
+    ],
+    packaging:[P('Cup with dome lid'), P('Spoon'), P('Label or sticker'), P('Napkin')],
+    settings:{taxRate:'6', priceIncludesTax:true, cardFeePct:'', cardFeeFixed:'', cardSharePct:'', setAsidePct:'25', targetCostPct:'30'},
+    event:{name:'Pop-Up Shop / Boo Bash', host:'Powerhouse Gym', date:'2026-10-28', start:'16:00', end:'19:00', address:'44125 12 Mile Rd E-123, Novi, MI 48377', fee:'', plan:{}, prep:{}, method:'Cash'},
+    sales:[], orders:[], expenses:[], checklist:{},
+    draftOrder:blankOrder(), draftExpense:blankExpense()
+  };
+}
+function migrate(s){
+  const d = defaults();
+  if(!s || typeof s !== 'object') return d;
+  for(const k of Object.keys(d)) if(s[k] == null) s[k] = d[k];
+  for(const k of ['settings','event']) for(const j of Object.keys(d[k])) if(s[k][j] == null) s[k][j] = d[k][j];
+  return s;
+}
+let S, cur = 'start';
+try{ const raw = localStorage.getItem(KEY); S = raw ? migrate(JSON.parse(raw)) : defaults(); }catch(e){ S = defaults(); }
+
+/* ---------- helpers ---------- */
+const $ = sel => document.querySelector(sel);
+const h = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { const n = parseFloat(String(v ?? '').replace(/[^0-9.\-]/g,'')); return Number.isFinite(n) ? n : 0; };
+const has = v => String(v ?? '').trim() !== '';
+const money = v => (v < 0 ? '-$' : '$') + Math.abs(v).toFixed(2);
+const pc = v => (v == null || !Number.isFinite(v)) ? 'n/a' : Math.round(v) + '%';
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+function getP(path){ return path.split('.').reduce((o,k) => o == null ? undefined : o[k], S); }
+function setP(path, v){ const ks = path.split('.'); let o = S; for(let i = 0; i < ks.length - 1; i++){ if(o[ks[i]] == null) o[ks[i]] = {}; o = o[ks[i]]; } o[ks[ks.length-1]] = v; }
+function inp(k, o = {}){
+  const v = getP(k);
+  return `<input type="${o.type || 'text'}" data-k="${k}"${o.num ? ' inputmode="decimal"' : ''} placeholder="${h(o.ph || '')}" value="${h(v ?? '')}"${o.aria ? ` aria-label="${h(o.aria)}"` : ''}>`;
+}
+function ta(k, ph = '', aria = ''){ return `<textarea data-k="${k}" rows="2" placeholder="${h(ph)}"${aria ? ` aria-label="${h(aria)}"` : ''}>${h(getP(k) ?? '')}</textarea>`; }
+function sel(k, opts, aria = ''){ const v = getP(k); return `<select data-k="${k}"${aria ? ` aria-label="${h(aria)}"` : ''}>${opts.map(o => `<option${o === v ? ' selected' : ''}>${h(o)}</option>`).join('')}</select>`; }
+function cb(k, label){ return `<label class="check"><input type="checkbox" data-k="${k}"${getP(k) ? ' checked' : ''}> <span>${label}</span></label>`; }
+function field(label, control){ return `<label class="field"><span>${label}</span>${control}</label>`; }
+function tile(label, value, cls = ''){ return `<div class="tile ${cls}"><small>${label}</small><b>${value}</b></div>`; }
+function parseDate(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; }
+function fmtDay(d){ return d ? d.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}) : ''; }
+function fmtTime(t){ if(!t) return ''; const [hh,mm] = t.split(':').map(Number); const d = new Date(); d.setHours(hh, mm || 0, 0, 0); return d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); }
+const allQ = () => QUESTIONS.flatMap(g => g.items);
+const allC = () => CHECK.flatMap(g => g.items);
+const qAnswered = () => allQ().filter(([id]) => has(S.answers[id])).length;
+const cSettled = () => allC().filter(([id]) => ['Done','N/A'].includes(S.checklist[id]?.status)).length;
+
+/* ---------- save ---------- */
+let saveT = null;
+function queueSave(){ clearTimeout(saveT); saveT = setTimeout(saveNow, 250); setSave('Saving...', false); }
+function saveNow(){
+  clearTimeout(saveT); saveT = null;
+  S.updatedAt = new Date().toISOString();
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); setSave('Saved on this device ' + new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}), false); }
+  catch(e){ setSave('NOT SAVED: this browser blocked storage. Use Export now.', true); }
+}
+function setSave(t, bad){ const el = $('#saveState'); el.textContent = t; el.classList.toggle('bad', !!bad); }
+window.addEventListener('beforeunload', () => { if(saveT) saveNow(); });
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden' && saveT) saveNow(); });
+
+/* ---------- money math ---------- */
+function lineCost(l){ const a = num(l.pkgAmt); return a > 0 ? num(l.pkgPrice) * num(l.used) / a : 0; }
+function lineReady(l){ return !has(l.name) || (has(l.pkgPrice) && num(l.pkgAmt) > 0 && has(l.used)); }
+function packCost(p){ const c = num(p.packCount); return c > 0 ? num(p.packPrice) / c : 0; }
+function packReady(p){ return !has(p.name) || (has(p.packPrice) && num(p.packCount) > 0); }
+function packPerCup(){ return S.packaging.reduce((s,p) => s + packCost(p), 0); }
+/* What a customer pays, what is sales tax, what she keeps, and the average card fee on it.
+   The fixed fee is counted once per cup, which assumes one cup per card payment (the cautious case). */
+function priceParts(list){
+  const r = num(S.settings.taxRate) / 100, inc = !!S.settings.priceIncludesTax;
+  const charged = inc ? list : list * (1 + r);
+  const net = inc ? list / (1 + r) : list;
+  const fee = (charged * num(S.settings.cardFeePct) / 100 + num(S.settings.cardFeeFixed)) * num(S.settings.cardSharePct) / 100;
+  return {charged, net, tax:charged - net, fee};
+}
+function prodCalc(p){
+  const batch = p.lines.reduce((s,l) => s + lineCost(l), 0);
+  const y = num(p.batchYield);
+  const missing = p.lines.filter(l => !lineReady(l)).length + S.packaging.filter(x => !packReady(x)).length;
+  const ing = y > 0 ? batch / y : null;
+  const pack = packPerCup();
+  const cost = ing == null ? null : ing + pack;
+  const pp = priceParts(num(p.price));
+  const profit = cost == null ? null : pp.net - pp.fee - cost;
+  const margin = profit == null || pp.net <= 0 ? null : profit / pp.net * 100;
+  const costPct = cost == null || pp.net <= 0 ? null : cost / pp.net * 100;
+  const t = num(S.settings.targetCostPct) / 100;
+  let target = null;
+  if(cost != null && t > 0){ const net = cost / t; target = S.settings.priceIncludesTax ? net * (1 + num(S.settings.taxRate) / 100) : net; }
+  return {batch, y, missing, ing, pack, cost, ...pp, profit, margin, costPct, target};
+}
+function eventCalc(){
+  const rows = S.products.map(p => {
+    const cups = num(S.event.plan[p.id]), y = num(p.batchYield);
+    const batches = y > 0 ? Math.ceil(cups / y - 1e-9) : 0;
+    return {p, cups, y, batches, made: y > 0 ? batches * y : cups, pp: priceParts(num(p.price))};
+  });
+  const m = new Map();
+  rows.forEach(r => { if(!r.batches) return; r.p.lines.forEach(l => {
+    if(!has(l.name) || !num(l.used)) return;
+    const k = l.name.trim().toLowerCase() + '|' + l.unit;
+    const c = m.get(k) || {name:l.name.trim(), unit:l.unit, need:0, pkgAmt:0, pkgPrice:0};
+    c.need += num(l.used) * r.batches;
+    if(!c.pkgAmt && num(l.pkgAmt) > 0){ c.pkgAmt = num(l.pkgAmt); c.pkgPrice = num(l.pkgPrice); }
+    m.set(k, c);
+  }); });
+  const made = rows.reduce((s,r) => s + r.made, 0);
+  const ings = [...m.values()].map(c => { const n = c.pkgAmt > 0 ? Math.ceil(c.need / c.pkgAmt - 1e-9) : null; return {...c, pkgs:n, cost: n == null ? null : n * c.pkgPrice}; });
+  const packs = made > 0 ? S.packaging.filter(p => has(p.name)).map(p => { const c = num(p.packCount); const n = c > 0 ? Math.ceil(made / c - 1e-9) : null; return {name:p.name, unit:'each', need:made, pkgAmt:c, pkgs:n, cost: n == null ? null : n * num(p.packPrice)}; }) : [];
+  const items = [...ings, ...packs];
+  const shop = items.reduce((s,i) => s + (i.cost || 0), 0);
+  const unpriced = items.filter(i => i.cost == null).length;
+  const cups = rows.reduce((s,r) => s + r.cups, 0);
+  const charged = rows.reduce((s,r) => s + r.cups * r.pp.charged, 0);
+  const net = rows.reduce((s,r) => s + r.cups * r.pp.net, 0);
+  const fees = rows.reduce((s,r) => s + r.cups * r.pp.fee, 0);
+  const fee = num(S.event.fee);
+  const perCup = cups > 0 ? (net - fees) / cups : 0;
+  const breakeven = perCup > 0 ? Math.ceil((shop + fee) / perCup - 1e-9) : null;
+  return {rows, items, shop, unpriced, cups, made, charged, net, tax:charged - net, fees, fee, profit:net - fees - shop - fee, breakeven};
+}
+function tally(){
+  const by = {}, meth = {};
+  let total = 0, count = 0;
+  S.sales.forEach(s => { by[s.pid] = (by[s.pid] || 0) + s.qty; meth[s.method] = (meth[s.method] || 0) + s.qty * s.price; total += s.qty * s.price; count += s.qty; });
+  return {by, meth, total, count, first:S.sales[0]?.ts, last:S.sales[S.sales.length-1]?.ts};
+}
+const orderTotal = o => Object.entries(o.items || {}).reduce((s,[pid,q]) => s + num(q) * num((o.prices || {})[pid]), 0);
+const orderCups = o => Object.values(o.items || {}).reduce((s,q) => s + num(q), 0);
+function moneyCalc(){
+  const r = num(S.settings.taxRate) / 100;
+  const popup = S.sales.reduce((s,x) => s + x.qty * x.price, 0);
+  const orders = S.orders.filter(o => o.paid && o.status !== 'Canceled').reduce((s,o) => s + orderTotal(o), 0);
+  const gross = popup + orders;
+  const tax = gross - gross / (1 + r);
+  const net = gross - tax;
+  const fees = gross * num(S.settings.cardFeePct) / 100 * num(S.settings.cardSharePct) / 100;
+  const exp = S.expenses.reduce((s,e) => s + num(e.amount), 0);
+  const byCat = {};
+  S.expenses.forEach(e => byCat[e.category] = (byCat[e.category] || 0) + num(e.amount));
+  const profit = net - fees - exp;
+  const setAside = Math.max(0, profit) * num(S.settings.setAsidePct) / 100;
+  return {popup, orders, gross, tax, net, fees, exp, byCat, profit, setAside, keep:profit - setAside};
+}
+
+/* ---------- pages ---------- */
+const PAGES = {};
+
+PAGES.start = {
+  render(){
+    const qN = allQ().length, cN = allC().length;
+    const ready = S.products.filter(p => { const c = prodCalc(p); return c.cost != null && c.missing === 0; }).length;
+    return `
+    <section class="card pinkish">
+      <h1>Working session with Sade</h1>
+      <p>This workbook collects what we need to finish the business plan and shape the first version of the app. Go top to bottom. Everything saves by itself on this device.</p>
+      <ol class="steps">
+        <li><button class="btn" data-go="interview">1. Questions</button><span class="muted">about 30 minutes · ${qAnswered()} of ${qN} answered</span></li>
+        <li><button class="btn" data-go="costing">2. Recipe costs</button><span class="muted">about 25 minutes · bring receipts · ${ready} of ${S.products.length} items costed</span></li>
+        <li><button class="btn" data-go="popup">3. October 28 pop-up</button><span class="muted">about 20 minutes</span></li>
+        <li><button class="btn" data-go="checklist">4. Launch checklist</button><span class="muted">about 15 minutes · ${cSettled()} of ${cN} settled</span></li>
+        <li><button class="btn" data-go="summary">5. Summary and export</button><span class="muted">save a copy before you leave</span></li>
+      </ol>
+    </section>
+    <section class="card">
+      <h2>What we already know from the flyers</h2>
+      <ul class="facts">
+        <li>Business name on the flyers: <b>Sirenity's Banana Pudding</b>. The flyers call you Shay Slay, handle <b>@shayy.slay</b>.</li>
+        <li>Two items: <b>Regular Banana Pudding</b> and <b>Strawberry Banana Pudding</b>, in clear cups with dome lids. Prices start at <b>$7</b>.</li>
+        <li>Payments listed: Zelle, Chime, Apple Pay.</li>
+        <li>Next event: Pop-Up Shop / Boo Bash at the gym, <b>Wednesday, October 28, 4 PM to 7 PM</b>, Novi. October 28, 2026 is a Wednesday, so the flyer date checks out. The gym spells its name <b>Powerhouse Gym</b>, and its own page gives the address as <b>44125 12 Mile Rd E-123</b>, Novi, MI 48377 (the flyer says "Power House Gym" and leaves out E-123).</li>
+        <li>Audience: about 40,000 followers (which platform, and how many are local, is on the Questions page).</li>
+      </ul>
+    </section>
+    <section class="card warn">
+      <h2>Check these first</h2>
+      <ul class="facts">
+        <li><b>Banana pudding cannot be sold as home-made food in Michigan.</b> The cottage food law, which lets people sell some foods from a home kitchen, leaves out foods that need refrigeration and dairy products (<a href="https://www.michigan.gov/mdard/food-dairy/cottage-food/what-can-i-make" target="_blank" rel="noopener">MDARD</a>). The legal path is a licensed kitchen plus your own license.</li>
+        <li><b>For October 28 you need your own Oakland County temporary food license,</b> and the pudding has to be made in a licensed kitchen, not at home. The fee is $87 if you apply two working days ahead (by Monday, October 26), $99 after that, $113 at the event. The gym's paperwork does not cover vendors. Call the <a href="https://www.oaklandcountymi.gov/community/health/public-health-services/environmental-health/food-safety" target="_blank" rel="noopener">Oakland County Health Division</a> first and ask exactly what they need.</li>
+        <li><b>The QR code on the order card does not scan.</b> A computer QR reader found the square but could not read it in 16 tries. It looks drawn by the image tool, not encoded. A working code is ready once your handle is confirmed.</li>
+        <li><b>Card payments at the table.</b> Zelle and Chime only work for customers who already use them, and Chime's and Apple Cash's terms say personal use only. Square's free plan takes cards and Apple Pay by tapping on an iPhone (2.6% plus 15 cents a payment when checked October 21).</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Your data</h2>
+      <p class="muted">Stored in this browser only. Export makes a file you can keep, email to yourself, or load on another device with Import.</p>
+      <div class="btns">
+        <button class="btn" data-act="exportJSON">Export my workbook</button>
+        <button class="btn ghost" data-act="importJSON">Import a workbook file</button>
+        <button class="btn danger" data-act="resetAll">Start over</button>
+      </div>
+      <p class="note">Last saved: ${S.updatedAt ? new Date(S.updatedAt).toLocaleString() : 'not yet'}</p>
+    </section>`;
+  }
+};
+
+PAGES.interview = {
+  render(){
+    return `<section class="card pinkish"><h1>Questions</h1><p class="muted">Short answers are fine. Skip anything you are not sure about and come back to it.</p><p><b data-out="qtotal"></b></p></section>` +
+      QUESTIONS.map((g,gi) => `<section class="card"><h2>${h(g.g)}<span class="count" data-out="g${gi}"></span></h2>${g.items.map(([id,q]) => `<label class="q"><span>${h(q)}</span>${ta('answers.' + id)}</label>`).join('')}</section>`).join('');
+  },
+  outputs(){
+    QUESTIONS.forEach((g,gi) => { const el = $(`[data-out="g${gi}"]`); if(el) el.textContent = `${g.items.filter(([id]) => has(S.answers[id])).length} of ${g.items.length}`; });
+    const t = $('[data-out="qtotal"]'); if(t) t.textContent = `${qAnswered()} of ${allQ().length} answered`;
+  }
+};
+
+PAGES.costing = {
+  render(){
+    const st = S.settings;
+    const prods = S.products.map((p,pi) => `
+      <section class="card">
+        <div class="prod-head">
+          ${field('Item name', inp(`products.${pi}.name`))}
+          ${field('Price ($)', inp(`products.${pi}.price`, {num:true, ph:'7'}))}
+          ${field('Cup size (oz)', inp(`products.${pi}.sizeOz`, {num:true, ph:'12'}))}
+          ${field('Cups per batch', inp(`products.${pi}.batchYield`, {num:true, ph:'how many?'}))}
+        </div>
+        <h3>Ingredients in one batch</h3>
+        <div class="rows">
+          <div class="row ing head"><div>Ingredient</div><div>Pack price</div><div>Pack size</div><div>Unit</div><div>Used per batch</div><div style="text-align:right">Cost</div><div></div></div>
+          ${p.lines.map((l,li) => `
+          <div class="row ing">
+            <label><span>Ingredient</span>${inp(`products.${pi}.lines.${li}.name`, {ph:'Ingredient', aria:'Ingredient'})}</label>
+            <label><span>Pack price ($)</span>${inp(`products.${pi}.lines.${li}.pkgPrice`, {num:true, ph:'$', aria:'Pack price'})}</label>
+            <label><span>Pack size</span>${inp(`products.${pi}.lines.${li}.pkgAmt`, {num:true, ph:'size', aria:'Pack size'})}</label>
+            <label><span>Unit</span>${sel(`products.${pi}.lines.${li}.unit`, UNITS, 'Unit')}</label>
+            <label><span>Used per batch</span>${inp(`products.${pi}.lines.${li}.used`, {num:true, ph:'amount', aria:'Used per batch'})}</label>
+            <div class="out" data-out="line-${l.id}"></div>
+            <button class="btn x" data-act="delLine" data-p="${pi}" data-i="${li}" aria-label="Remove ingredient" title="Remove">×</button>
+          </div>`).join('')}
+        </div>
+        <div class="btns" style="margin-top:10px">
+          <button class="btn ghost" data-act="addLine" data-p="${pi}">Add ingredient</button>
+          <button class="btn danger" data-act="delProduct" data-p="${pi}">Remove this item</button>
+        </div>
+        <div data-out="prod-${p.id}"></div>
+      </section>`).join('');
+    return `
+    <section class="card pinkish">
+      <h1>Recipe costs</h1>
+      <p class="muted">For each ingredient: what the package costs, how big the package is, and how much of it goes into one batch (same unit for both). The page works out cost per cup and profit per cup. The ingredient rows are a starting guess; change them to match the real recipe.</p>
+    </section>
+    <section class="card">
+      <h2>Settings</h2>
+      <div class="grid3">
+        ${field('Sales tax rate (%)', inp('settings.taxRate', {num:true}))}
+        ${field('Card fee (%)', inp('settings.cardFeePct', {num:true, ph:'Square free plan: 2.6'}))}
+        ${field('Card fee per payment ($)', inp('settings.cardFeeFixed', {num:true, ph:'Square free plan: 0.15'}))}
+        ${field('Share of sales paid by card (%)', inp('settings.cardSharePct', {num:true, ph:'guess for now'}))}
+        ${field('Target: ingredients plus packaging as % of price', inp('settings.targetCostPct', {num:true}))}
+      </div>
+      <div style="margin-top:10px">${cb('settings.priceIncludesTax', 'My prices include sales tax (customer pays the sign price, tax comes out of it)')}</div>
+      <p class="note">Michigan's sales tax is 6%, and a cup sold with a spoon counts as prepared food, so it is taxable (Treasury bulletin RAB 2026-2). Square's free plan charged 2.6% plus 15 cents per in-person payment when checked on October 21; check your own processor's rate. The per-payment fee is counted once per cup, the cautious case.</p>
+    </section>
+    <section class="card">
+      <h2>Packaging per cup (shared by every item)</h2>
+      <div class="rows">
+        <div class="row pack head"><div>Item</div><div>Pack price</div><div>Count in pack</div><div style="text-align:right">Per cup</div><div></div></div>
+        ${S.packaging.map((x,i) => `
+        <div class="row pack">
+          <label><span>Item</span>${inp(`packaging.${i}.name`, {ph:'Packaging item', aria:'Packaging item'})}</label>
+          <label><span>Pack price ($)</span>${inp(`packaging.${i}.packPrice`, {num:true, ph:'$', aria:'Pack price'})}</label>
+          <label><span>Count in pack</span>${inp(`packaging.${i}.packCount`, {num:true, ph:'count', aria:'Count in pack'})}</label>
+          <div class="out" data-out="pack-${x.id}"></div>
+          <button class="btn x" data-act="delPack" data-i="${i}" aria-label="Remove packaging item" title="Remove">×</button>
+        </div>`).join('')}
+      </div>
+      <div class="btns" style="margin-top:10px"><button class="btn ghost" data-act="addPack">Add packaging item</button></div>
+      <p class="note">Packaging per cup: <b data-out="packtotal"></b></p>
+    </section>
+    ${prods}
+    <div class="btns"><button class="btn" data-act="addProduct">Add another menu item</button></div>`;
+  },
+  outputs(){
+    S.products.forEach(p => {
+      p.lines.forEach(l => { const el = $(`[data-out="line-${l.id}"]`); if(el) el.textContent = num(l.pkgAmt) > 0 && has(l.used) ? money(lineCost(l)) : ''; });
+      const c = prodCalc(p), el = $(`[data-out="prod-${p.id}"]`);
+      if(!el) return;
+      if(c.cost == null){ el.innerHTML = `<p class="note" style="margin-top:12px"><span class="flag">Needs cups per batch</span> Enter how many cups one batch makes to see cost per cup.</p>`; return; }
+      const good = c.margin != null && c.margin >= 50;
+      el.innerHTML = `
+        <h3>Per cup</h3>
+        <div class="tiles">
+          ${tile('Ingredients', money(c.ing), 'gold')}
+          ${tile('Packaging', money(c.pack), 'gold')}
+          ${tile('Total cost', money(c.cost), 'gold')}
+          ${tile('Customer pays', money(c.charged))}
+          ${tile('Sales tax in it', money(c.tax))}
+          ${tile('Card fee (avg)', money(c.fee))}
+          ${tile('Profit per cup', money(c.profit), c.profit > 0 ? 'ok' : 'bad')}
+          ${tile('Profit margin', pc(c.margin), good ? 'ok' : '')}
+        </div>
+        <p class="note">One batch costs ${money(c.batch)} in ingredients and makes ${c.y} cups. Ingredients plus packaging are ${pc(c.costPct)} of what you keep after tax. At a ${num(S.settings.targetCostPct)}% target the price would be ${c.target != null ? money(c.target) : 'n/a'}.
+        ${c.missing ? `<br><span class="flag">${plural(c.missing, 'row')} still need numbers</span> so this cost is too low until they are filled in.` : ''}</p>`;
+    });
+    S.packaging.forEach(x => { const el = $(`[data-out="pack-${x.id}"]`); if(el) el.textContent = num(x.packCount) > 0 ? money(packCost(x)) : ''; });
+    const t = $('[data-out="packtotal"]'); if(t) t.textContent = money(packPerCup());
+  }
+};
+
+PAGES.popup = {
+  render(){
+    const ev = S.event;
+    const d = parseDate(ev.date);
+    const prep = PREP.map(([id,off,t]) => {
+      let when = off === 0 ? 'Event day' : (off + ' days');
+      let past = false;
+      if(d){ const x = new Date(d); x.setDate(x.getDate() + off); when = fmtDay(x); const today = new Date(); today.setHours(0,0,0,0); past = x < today; }
+      return `<label class="${past ? 'past' : ''}"><input type="checkbox" data-k="event.prep.${id}"${ev.prep[id] ? ' checked' : ''}><span class="when">${h(when)}</span><span>${h(t)}</span></label>`;
+    }).join('');
+    return `
+    <section class="card pinkish">
+      <h1>Pop-up planner</h1>
+      <p class="muted">Plan how many cups to make, get the shopping list, see the money, then use Pop-up mode on the day to count sales with one tap each.</p>
+    </section>
+    <section class="card">
+      <h2>The event</h2>
+      <div class="grid2">
+        ${field('Event', inp('event.name'))}
+        ${field('Host', inp('event.host'))}
+        ${field('Date', inp('event.date', {type:'date'}))}
+        ${field('Address', inp('event.address'))}
+        ${field('Starts', inp('event.start', {type:'time'}))}
+        ${field('Ends', inp('event.end', {type:'time'}))}
+        ${field('Vendor fee you pay ($)', inp('event.fee', {num:true, ph:'0 if free'}))}
+      </div>
+    </section>
+    <section class="card">
+      <h2>How many cups to bring</h2>
+      <div class="grid2">${S.products.map(p => field(h(p.name) + ' (cups)', inp(`event.plan.${p.id}`, {num:true, ph:'0'}))).join('')}</div>
+      <div data-out="evrows"></div>
+    </section>
+    <section class="card"><h2>Shopping list</h2><div data-out="evshop"></div></section>
+    <section class="card"><h2>If everything sells</h2><div data-out="evmoney"></div></section>
+    <section class="card"><h2>Prep timeline</h2><div class="prep">${prep}</div></section>
+    <section class="card" id="popmode"><h2>Pop-up mode: count sales</h2><div data-out="tally"></div></section>`;
+  },
+  outputs(){
+    const e = eventCalc();
+    const r = $('[data-out="evrows"]');
+    if(r) r.innerHTML = e.cups ? `<div class="tw" style="margin-top:12px"><table><thead><tr><th>Item</th><th class="n">Cups to sell</th><th class="n">Cups per batch</th><th class="n">Batches</th><th class="n">Cups you will make</th></tr></thead><tbody>${e.rows.map(x => `<tr><td>${h(x.p.name)}</td><td class="n">${x.cups}</td><td class="n">${x.y || '<span class="flag">set on Recipe costs</span>'}</td><td class="n">${x.y ? x.batches : ''}</td><td class="n">${x.made}</td></tr>`).join('')}</tbody></table></div>` : '<p class="note">Enter cup counts above.</p>';
+    const s = $('[data-out="evshop"]');
+    if(s) s.innerHTML = e.items.length ? `<div class="tw"><table><thead><tr><th>Buy</th><th class="n">Needed</th><th class="n">Packs to buy</th><th class="n">Cost</th></tr></thead><tbody>${e.items.map(i => `<tr><td>${h(i.name)}</td><td class="n">${+i.need.toFixed(2)} ${h(i.unit)}</td><td class="n">${i.pkgs == null ? '<span class="flag">no pack size</span>' : i.pkgs}</td><td class="n">${i.cost == null ? '' : money(i.cost)}</td></tr>`).join('')}<tr class="total"><td colspan="3">Total to spend</td><td class="n">${money(e.shop)}</td></tr></tbody></table></div><p class="note">Whole packages, so you will have some left over for next time. Check your pantry before you shop.${e.unpriced ? ` <span class="flag">${plural(e.unpriced, 'item')} without pack prices</span>` : ''}</p>` : '<p class="note">Fill in Recipe costs and the cup counts above to get the list.</p>';
+    const m = $('[data-out="evmoney"]');
+    if(m) m.innerHTML = e.cups ? `<div class="tiles">${tile('Cups', e.cups)}${tile('Customers pay', money(e.charged))}${tile('Sales tax in it', money(e.tax))}${tile('Card fees (avg)', money(e.fees))}${tile('Shopping', money(e.shop), 'gold')}${tile('Vendor fee', money(e.fee), 'gold')}${tile('Profit if all sell', money(e.profit), e.profit > 0 ? 'ok' : 'bad')}${tile('Break-even', e.breakeven == null ? 'n/a' : plural(e.breakeven, 'cup'))}</div><p class="note">Break-even is how many cups must sell to cover the shopping and the vendor fee.</p>` : '<p class="note">Enter cup counts above.</p>';
+    const t = $('[data-out="tally"]');
+    if(t){
+      const tl = tally();
+      t.innerHTML = `
+        <p class="muted">Pick how the customer paid, then tap the item. One tap is one cup.</p>
+        <div class="methods" role="group" aria-label="Payment method">${METHODS.map(x => `<button class="chip" data-act="method" data-m="${h(x)}" aria-pressed="${S.event.method === x}">${h(x)}</button>`).join('')}</div>
+        <div class="sellgrid">${S.products.map(p => { const sold = tl.by[p.id] || 0, brought = num(S.event.plan[p.id]); const left = brought - sold; return `<button class="sell${brought && left <= 0 ? ' out' : ''}" data-act="sell" data-pid="${p.id}"><b>${h(p.name)}</b><span>Sold ${sold}${brought ? ` · ${left > 0 ? left + ' left' : 'SOLD OUT'}` : ''}</span><span>${money(priceParts(num(p.price)).charged)} each</span></button>`; }).join('')}</div>
+        <div class="tiles">${tile('Cups sold', tl.count)}${tile('Collected', money(tl.total), 'ok')}${METHODS.filter(x => tl.meth[x]).map(x => tile(h(x), money(tl.meth[x]))).join('')}</div>
+        <p class="note">${tl.first ? `First sale ${new Date(tl.first).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}, last sale ${new Date(tl.last).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}.` : 'No sales yet.'}</p>
+        <div class="btns"><button class="btn ghost" data-act="undoSale"${S.sales.length ? '' : ' disabled'}>Undo last tap</button><button class="btn danger" data-act="resetSales"${S.sales.length ? '' : ' disabled'}>Clear all sales</button></div>`;
+    }
+  }
+};
+
+PAGES.orders = {
+  render(){
+    const o = S.draftOrder;
+    const list = S.orders.map((x,i) => ({x,i})).sort((a,b) => ((a.x.date || '9') + (a.x.time || '')).localeCompare((b.x.date || '9') + (b.x.time || '')));
+    return `
+    <section class="card pinkish"><h1>Orders</h1><p class="muted">Log every pre-order here instead of keeping it in DMs. The page adds up how many cups to make for each pickup day.</p></section>
+    <section class="card">
+      <h2>New order</h2>
+      <div class="grid2">
+        ${field('Customer name', inp('draftOrder.name'))}
+        ${field('How to reach them (handle or phone)', inp('draftOrder.contact'))}
+        ${field('Pickup date', inp('draftOrder.date', {type:'date'}))}
+        ${field('Pickup time', inp('draftOrder.time', {type:'time'}))}
+        ${S.products.map(p => field(h(p.name) + ' (cups)', inp(`draftOrder.items.${p.id}`, {num:true, ph:'0'}))).join('')}
+        ${field('Paid with', sel('draftOrder.method', METHODS))}
+        <div class="field"><span>&nbsp;</span>${cb('draftOrder.paid', 'Paid already')}</div>
+      </div>
+      <div style="margin-top:10px">${field('Notes', inp('draftOrder.notes', {ph:'Allergies, delivery address, anything else'}))}</div>
+      <div class="btns" style="margin-top:10px"><button class="btn" data-act="addOrder">Save order</button><span class="note" data-out="orderhint"></span></div>
+    </section>
+    <section class="card"><h2>Cups to make</h2><div data-out="need"></div></section>
+    <section class="card">
+      <h2>All orders <span class="count">${S.orders.length}</span></h2>
+      ${list.length ? list.map(({x,i}) => `
+        <div class="order">
+          <div>
+            <b>${h(x.name)}</b> <span class="meta">${h(x.contact)}</span><br>
+            <span class="meta">${x.date ? h(fmtDay(parseDate(x.date))) : 'No date'}${x.time ? ' at ' + h(fmtTime(x.time)) : ''} · ${S.products.filter(p => num(x.items[p.id])).map(p => num(x.items[p.id]) + ' ' + h(p.name)).join(', ') || 'no items'} · ${money(orderTotal(x))}</span>
+            ${x.notes ? `<br><span class="meta">${h(x.notes)}</span>` : ''}
+          </div>
+          <div class="ctl">
+            ${sel(`orders.${i}.status`, STATUSES, 'Order status')}
+            <label class="check small"><input type="checkbox" data-k="orders.${i}.paid"${x.paid ? ' checked' : ''}> Paid</label>
+            <button class="btn x" data-act="delOrder" data-i="${i}" aria-label="Delete order" title="Delete">×</button>
+          </div>
+        </div>`).join('') : '<p class="note">No orders yet.</p>'}
+    </section>`;
+  },
+  outputs(){
+    const open = S.orders.filter(o => !['Picked up','Canceled'].includes(o.status));
+    const days = {};
+    open.forEach(o => { const k = o.date || 'No date'; days[k] = days[k] || {}; S.products.forEach(p => days[k][p.id] = (days[k][p.id] || 0) + num(o.items[p.id])); });
+    const keys = Object.keys(days).sort();
+    const el = $('[data-out="need"]');
+    if(el) el.innerHTML = keys.length ? `<div class="tw"><table><thead><tr><th>Pickup day</th>${S.products.map(p => `<th class="n">${h(p.name)}</th>`).join('')}</tr></thead><tbody>${keys.map(k => `<tr><td>${k === 'No date' ? k : h(fmtDay(parseDate(k)))}</td>${S.products.map(p => `<td class="n">${days[k][p.id] || 0}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '<p class="note">No open orders.</p>';
+  }
+};
+
+PAGES.money = {
+  render(){
+    return `
+    <section class="card pinkish"><h1>Money</h1><p class="muted">Sales come in from Pop-up mode and paid orders. Add every expense with its receipt. This is a running picture, not a tax return.</p></section>
+    <section class="card"><h2>So far</h2><div data-out="totals"></div>
+      <div class="grid2" style="margin-top:8px">${field('Set aside for income tax (%)', inp('settings.setAsidePct', {num:true}))}</div>
+      <p class="note">Self-employed people often set aside a share of profit for income and self-employment tax. Pick the number with a tax preparer.</p>
+    </section>
+    <section class="card">
+      <h2>Add an expense</h2>
+      <div class="grid4">
+        ${field('Date', inp('draftExpense.date', {type:'date'}))}
+        ${field('What', inp('draftExpense.what', {ph:'Bananas, cups, permit'}))}
+        ${field('Category', sel('draftExpense.category', CATS))}
+        ${field('Amount ($)', inp('draftExpense.amount', {num:true}))}
+      </div>
+      <div class="btns" style="margin-top:10px"><button class="btn" data-act="addExpense">Save expense</button><span class="note" data-out="exphint"></span></div>
+    </section>
+    <section class="card">
+      <h2>Expenses <span class="count">${S.expenses.length}</span></h2>
+      ${S.expenses.length ? `<div class="tw"><table><thead><tr><th>Date</th><th>What</th><th>Category</th><th class="n">Amount</th><th></th></tr></thead><tbody>${S.expenses.map((e,i) => ({e,i})).sort((a,b) => (b.e.date || '').localeCompare(a.e.date || '')).map(({e,i}) => `<tr><td>${h(e.date)}</td><td>${h(e.what)}</td><td>${h(e.category)}</td><td class="n">${money(num(e.amount))}</td><td><button class="btn x" data-act="delExpense" data-i="${i}" aria-label="Delete expense">×</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="note">No expenses yet.</p>'}
+      <div data-out="bycat"></div>
+    </section>`;
+  },
+  outputs(){
+    const m = moneyCalc();
+    const t = $('[data-out="totals"]');
+    if(t) t.innerHTML = `<div class="tiles">${tile('Pop-up sales', money(m.popup))}${tile('Paid orders', money(m.orders))}${tile('Collected', money(m.gross))}${tile('Sales tax in it', money(m.tax))}${tile('Card fees (est.)', money(m.fees))}${tile('Expenses', money(m.exp), 'gold')}${tile('Profit', money(m.profit), m.profit >= 0 ? 'ok' : 'bad')}${tile('Set aside', money(m.setAside))}${tile('Yours to keep', money(m.keep), m.keep >= 0 ? 'ok' : 'bad')}</div>`;
+    const c = $('[data-out="bycat"]');
+    if(c) c.innerHTML = Object.keys(m.byCat).length ? `<h3>By category</h3><div class="tiles">${Object.entries(m.byCat).map(([k,v]) => tile(h(k), money(v), 'gold')).join('')}</div>` : '';
+  }
+};
+
+PAGES.checklist = {
+  render(){
+    allC().forEach(([id]) => { if(!S.checklist[id]) S.checklist[id] = {status:'To do', note:''}; });
+    return `<section class="card pinkish"><h1>Launch checklist</h1><p class="muted">Mark each item as you go. Notes are for dates, phone numbers, who is doing it. <b data-out="ctotal"></b></p></section>` +
+      CHECK.map(g => `<section class="card"><h2>${h(g.g)}</h2>${g.items.map(([id,t,why,link]) => `
+        <div class="chk">
+          <div class="chk-t"><b>${h(t)}</b>${why ? `<span class="why">${h(why)}</span>` : ''}${link ? `<a class="small" href="${h(link)}" target="_blank" rel="noopener">Official page</a>` : ''}</div>
+          <div class="chk-c">${sel(`checklist.${id}.status`, CHK_STATUS, 'Status')}${inp(`checklist.${id}.note`, {ph:'Notes', aria:'Notes'})}</div>
+        </div>`).join('')}</section>`).join('');
+  },
+  outputs(){ const t = $('[data-out="ctotal"]'); if(t) t.textContent = `${cSettled()} of ${allC().length} settled.`; }
+};
+
+PAGES.summary = {
+  render(){
+    const e = eventCalc(), m = moneyCalc(), tl = tally();
+    const answered = QUESTIONS.map(g => ({g:g.g, items:g.items.filter(([id]) => has(S.answers[id]))})).filter(g => g.items.length);
+    const open = allQ().filter(([id]) => !has(S.answers[id]));
+    return `
+    <section class="card pinkish noprint">
+      <h1>Summary</h1>
+      <p class="muted">Everything from this workbook on one page. Print it or save it as a PDF, and export the file so nothing is lost.</p>
+      <div class="btns"><button class="btn" data-act="print">Print or save as PDF</button><button class="btn ghost" data-act="exportJSON">Export my workbook</button></div>
+    </section>
+    <p class="only-print muted">Printed ${new Date().toLocaleString()}</p>
+    <section class="card">
+      <h2>Menu and cost per cup</h2>
+      <div class="tw"><table><thead><tr><th>Item</th><th class="n">Price</th><th class="n">Cost per cup</th><th class="n">Profit per cup</th><th class="n">Margin</th><th>Status</th></tr></thead><tbody>
+      ${S.products.map(p => { const c = prodCalc(p); return `<tr><td>${h(p.name)}${p.sizeOz ? ` (${h(p.sizeOz)} oz)` : ''}</td><td class="n">${money(num(p.price))}</td><td class="n">${c.cost == null ? '' : money(c.cost)}</td><td class="n">${c.profit == null ? '' : money(c.profit)}</td><td class="n">${pc(c.margin)}</td><td>${c.cost == null ? '<span class="flag">needs cups per batch</span>' : c.missing ? `<span class="flag">${plural(c.missing, 'row')} missing</span>` : '<span class="flag ok">complete</span>'}</td></tr>`; }).join('')}
+      </tbody></table></div>
+    </section>
+    <section class="card">
+      <h2>${h(S.event.name)} · ${S.event.date ? h(fmtDay(parseDate(S.event.date))) : ''} ${h(fmtTime(S.event.start))} to ${h(fmtTime(S.event.end))}</h2>
+      <p class="muted">${h(S.event.host)}, ${h(S.event.address)}</p>
+      <div class="tiles">${tile('Cups planned', e.cups)}${tile('Shopping', money(e.shop), 'gold')}${tile('Profit if all sell', money(e.profit), e.profit > 0 ? 'ok' : 'bad')}${tile('Break-even', e.breakeven == null ? 'n/a' : plural(e.breakeven, 'cup'))}${tile('Sold so far', tl.count)}${tile('Collected', money(tl.total))}</div>
+    </section>
+    <section class="card">
+      <h2>Money so far</h2>
+      <div class="tiles">${tile('Collected', money(m.gross))}${tile('Expenses', money(m.exp), 'gold')}${tile('Profit', money(m.profit), m.profit >= 0 ? 'ok' : 'bad')}${tile('Orders logged', S.orders.length)}</div>
+    </section>
+    <section class="card">
+      <h2>Checklist · ${cSettled()} of ${allC().length} settled</h2>
+      <div class="tw"><table><thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead><tbody>${allC().map(([id,t]) => `<tr><td>${h(t)}</td><td>${h(S.checklist[id]?.status || 'To do')}</td><td>${h(S.checklist[id]?.note || '')}</td></tr>`).join('')}</tbody></table></div>
+    </section>
+    <section class="card">
+      <h2>Answers · ${qAnswered()} of ${allQ().length}</h2>
+      ${answered.length ? answered.map(g => `<h3>${h(g.g)}</h3>${g.items.map(([id,q]) => `<p><b>${h(q)}</b><br>${h(S.answers[id]).replace(/\n/g,'<br>')}</p>`).join('')}`).join('') : '<p class="note">No answers yet.</p>'}
+      ${open.length ? `<h3>Still open</h3><ul class="facts">${open.map(([,q]) => `<li>${h(q)}</li>`).join('')}</ul>` : ''}
+    </section>`;
+  }
+};
+
+/* ---------- actions ---------- */
+function commit(rerender){ queueSave(); if(rerender) render(); else refreshOutputs(); }
+function download(name, text){
+  const blob = new Blob([text], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+const ACTIONS = {
+  addLine(d){ S.products[+d.p].lines.push(L('')); commit(true); },
+  delLine(d){ S.products[+d.p].lines.splice(+d.i, 1); commit(true); },
+  addPack(){ S.packaging.push(P('')); commit(true); },
+  delPack(d){ S.packaging.splice(+d.i, 1); commit(true); },
+  addProduct(){ S.products.push({id:'p_' + uid(), name:'New item', price:'', sizeOz:'', batchYield:'', lines:[L('')]}); commit(true); },
+  delProduct(d){
+    const p = S.products[+d.p];
+    if(!confirm(`Remove ${p.name || 'this item'} and its recipe?`)) return;
+    S.products.splice(+d.p, 1); delete S.event.plan[p.id]; commit(true);
+  },
+  method(d){ S.event.method = d.m; commit(false); },
+  sell(d){
+    const p = S.products.find(x => x.id === d.pid); if(!p) return;
+    S.sales.push({id:uid(), ts:Date.now(), pid:p.id, name:p.name, qty:1, price:priceParts(num(p.price)).charged, method:S.event.method || 'Cash'});
+    if(navigator.vibrate) navigator.vibrate(30);
+    commit(false);
+  },
+  undoSale(){ S.sales.pop(); commit(false); },
+  resetSales(){ if(confirm('Clear every pop-up sale? This cannot be undone.')){ S.sales = []; commit(false); } },
+  addOrder(){
+    const o = S.draftOrder, hint = $('[data-out="orderhint"]');
+    const items = {}; S.products.forEach(p => { const q = num(o.items[p.id]); if(q > 0) items[p.id] = q; });
+    if(!has(o.name) || !Object.keys(items).length){ if(hint) hint.textContent = 'Add a name and at least one cup.'; return; }
+    const prices = {}; S.products.forEach(p => prices[p.id] = priceParts(num(p.price)).charged);
+    S.orders.push({id:uid(), created:new Date().toISOString(), name:o.name.trim(), contact:o.contact.trim(), date:o.date, time:o.time, items, prices, paid:!!o.paid, method:o.method, status:o.paid ? 'Paid' : 'New', notes:o.notes.trim()});
+    S.draftOrder = blankOrder(); commit(true);
+  },
+  delOrder(d){ if(confirm('Delete this order?')){ S.orders.splice(+d.i, 1); commit(true); } },
+  addExpense(){
+    const e = S.draftExpense, hint = $('[data-out="exphint"]');
+    if(!has(e.what) || !(num(e.amount) > 0)){ if(hint) hint.textContent = 'Add what it was and the amount.'; return; }
+    S.expenses.push({id:uid(), date:e.date, what:e.what.trim(), category:e.category, amount:String(num(e.amount))});
+    S.draftExpense = blankExpense(); commit(true);
+  },
+  delExpense(d){ if(confirm('Delete this expense?')){ S.expenses.splice(+d.i, 1); commit(true); } },
+  exportJSON(){ saveNow(); download('sade_workbook_' + new Date().toISOString().slice(0,10) + '.json', JSON.stringify(S, null, 2)); },
+  importJSON(){ $('#importFile').click(); },
+  resetAll(){
+    if(!confirm('Start over? This erases everything in this workbook on this device.')) return;
+    if(!confirm('Last check: export first if you want a copy. Erase now?')) return;
+    S = defaults(); saveNow(); go('start');
+  },
+  print(){ window.print(); }
+};
+$('#importFile').addEventListener('change', ev => {
+  const f = ev.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try{
+      const data = JSON.parse(r.result);
+      if(!data || data.version !== 1 || !Array.isArray(data.products)) throw new Error('not a workbook file');
+      if(!confirm('Replace what is on this device with the imported file?')) return;
+      S = migrate(data); saveNow(); go('start');
+    }catch(e){ alert('That file could not be loaded: ' + e.message); }
+    finally{ ev.target.value = ''; }
+  };
+  r.readAsText(f);
+});
+
+/* ---------- wiring ---------- */
+function onEdit(e){
+  const el = e.target, k = el.dataset && el.dataset.k; if(!k) return;
+  setP(k, el.type === 'checkbox' ? el.checked : el.value);
+  if(el.tagName === 'TEXTAREA') grow(el);
+  queueSave(); refreshOutputs();
+}
+document.addEventListener('input', onEdit);
+document.addEventListener('change', e => { if(e.target.type === 'checkbox' || e.target.tagName === 'SELECT') onEdit(e); });
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return; }
+  const a = e.target.closest('[data-act]'); if(!a || a.disabled) return;
+  const fn = ACTIONS[a.dataset.act]; if(fn) fn(a.dataset, a);
+});
+function grow(t){ t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
+function refreshOutputs(){ const pg = PAGES[cur]; if(pg && pg.outputs) pg.outputs(); }
+function renderTabs(){ $('#tabs').innerHTML = TABS.map(([id,label]) => `<button role="tab" aria-selected="${id === cur}" data-go="${id}">${label}</button>`).join(''); }
+function render(){
+  renderTabs();
+  const y = window.scrollY;
+  $('#view').innerHTML = PAGES[cur].render();
+  document.querySelectorAll('#view textarea').forEach(grow);
+  refreshOutputs();
+  window.scrollTo(0, y);
+}
+function go(t){
+  if(!PAGES[t]) t = 'start';
+  cur = t;
+  if(location.hash !== '#' + t) history.replaceState(null, '', '#' + t);
+  render(); window.scrollTo(0, 0);
+  const b = document.querySelector(`#tabs [data-go="${t}"]`); if(b) b.scrollIntoView({block:'nearest', inline:'center'});
+}
+window.addEventListener('hashchange', () => { const t = location.hash.slice(1); if(t !== cur && PAGES[t]) go(t); });
+go(location.hash.slice(1) || 'start');
+setSave(S.updatedAt ? 'Saved on this device' : 'Not saved yet', false);
+</script>
+</body>
+</html>
