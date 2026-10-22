@@ -119,6 +119,7 @@ tr.total td{font-weight:800;border-top:2px solid var(--line)}
 .contact .btns{justify-content:flex-end}
 footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);font-size:13px}
 .only-print{display:none}
+.update{position:sticky;top:0;z-index:9;background:var(--ink);color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;font-weight:600}
 @media (max-width:700px){
   .grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .row.ing,.row.pack{grid-template-columns:1fr 1fr}
@@ -156,11 +157,12 @@ footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);fo
 </header>
 <nav class="tabs" aria-label="Sections"><div class="in" id="tabs"></div></nav>
 <main id="view"><noscript><div class="card warn">This workbook needs JavaScript turned on.</div></noscript></main>
-<footer>Everything you type stays in this browser on this device; nothing you type is sent anywhere (the page only downloads its fonts). Use Export on the Start or Summary page to keep a copy. Built by KS Solutions.</footer>
+<footer>Everything you type stays in this browser on this device; nothing you type is sent anywhere (the page only downloads its fonts). Use Export on the Start or Summary page to keep a copy. Built by KS Solutions. Version <span id="build"></span>.</footer>
 <input type="file" id="importFile" accept="application/json,.json" hidden>
 <script>
 'use strict';
 const KEY = 'sbp_workbook_v1';
+const BUILD = '2026-10-22-5';
 const METHODS = ['Cash','Zelle','Chime','Apple Pay','Card','Other'];
 const STATUSES = ['New','Paid','Made','Picked up','Canceled'];
 const CATS = ['Ingredients','Packaging','Event fees','Licenses and permits','Equipment','Marketing','Other'];
@@ -456,6 +458,7 @@ PAGES.start = {
         <li><button class="btn" data-go="popup">3. October 28 pop-up</button><span class="muted">about 20 minutes</span></li>
         <li><button class="btn" data-go="checklist">4. Launch checklist</button><span class="muted">about 15 minutes · ${cSettled()} of ${cN} settled</span></li>
         <li><button class="btn" data-go="summary">5. Summary and export</button><span class="muted">save a copy before you leave</span></li>
+        <li><button class="btn ghost" data-go="contacts">Contacts: tap to call</button><span class="muted">health departments, clerks and 21 licensed kitchens near Detroit</span></li>
       </ol>
     </section>
     <section class="card">
@@ -908,6 +911,29 @@ function go(t){
   const b = document.querySelector(`#tabs [data-go="${t}"]`); if(b) b.scrollIntoView({block:'nearest', inline:'center'});
 }
 window.addEventListener('hashchange', () => { const t = location.hash.slice(1); if(t !== cur && PAGES[t]) go(t); });
+/* ---------- updates ----------
+   The live page is checked whenever the workbook is opened or brought back on screen. When a newer
+   version is published, a bar offers to reload. Answers live in this browser's storage, so reloading
+   keeps them. */
+ACTIONS.reloadApp = () => { saveNow(); location.reload(); };
+let lastCheck = 0;
+async function checkUpdate(){
+  if(!/^https?:$/.test(location.protocol) || Date.now() - lastCheck < 30000) return;
+  lastCheck = Date.now();
+  try{
+    const r = await fetch(location.pathname + '?check=' + Date.now(), {cache: 'no-store'});
+    if(!r.ok) return;
+    const m = (await r.text()).match(/const BUILD = '([^']+)'/);
+    if(m && m[1] !== BUILD && !document.getElementById('upd')){
+      const b = document.createElement('div'); b.id = 'upd'; b.className = 'update noprint';
+      b.innerHTML = '<span>A newer version of this workbook is ready.</span><button class="btn small" data-act="reloadApp">Update now</button>';
+      document.body.prepend(b);
+    }
+  }catch(e){ /* offline: keep working on this copy */ }
+}
+window.addEventListener('load', checkUpdate);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') checkUpdate(); });
+$('#build').textContent = BUILD;
 go(location.hash.slice(1) || 'start');
 setSave(S.updatedAt ? 'Saved on this device' : 'Not saved yet', false);
 </script>
