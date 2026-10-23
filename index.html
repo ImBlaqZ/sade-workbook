@@ -162,13 +162,13 @@ footer{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--muted);fo
 <script>
 'use strict';
 const KEY = 'sbp_workbook_v1';
-const BUILD = '2026-10-22-5';
+const BUILD = '2026-10-22-6';
 const METHODS = ['Cash','Zelle','Chime','Apple Pay','Card','Other'];
 const STATUSES = ['New','Paid','Made','Picked up','Canceled'];
 const CATS = ['Ingredients','Packaging','Event fees','Licenses and permits','Equipment','Marketing','Other'];
 const UNITS = ['oz','lb','g','fl oz','cup','each'];
 const CHK_STATUS = ['To do','Doing','Done','N/A'];
-const TABS = [['start','Start'],['interview','Questions'],['costing','Recipe costs'],['popup','Pop-up'],['orders','Orders'],['money','Money'],['checklist','Checklist'],['contacts','Contacts'],['summary','Summary']];
+const TABS = [['start','Start'],['interview','Questions'],['costing','Recipe costs'],['popup','Pop-up'],['orders','Orders'],['money','Money'],['goals','Goals'],['checklist','Checklist'],['contacts','Contacts'],['summary','Summary']];
 
 /* Questions for the working session. Ids are stable: answers are stored by id. */
 const QUESTIONS = [
@@ -303,6 +303,7 @@ function defaults(){
     settings:{taxRate:'6', priceIncludesTax:true, cardFeePct:'', cardFeeFixed:'', cardSharePct:'', setAsidePct:'25', targetCostPct:'30'},
     event:{name:'Pop-Up Shop / Boo Bash', host:'Powerhouse Gym', date:'2026-10-28', start:'16:00', end:'19:00', address:'44125 12 Mile Rd E-123, Novi, MI 48377', fee:'', plan:{}, prep:{}, method:'Cash'},
     sales:[], orders:[], expenses:[], checklist:{},
+    goals:{pay:'2000', reinvest:'50', perCup:'', fixed:'470', cupsPerEvent:'100', start:'12560', growth:'10', ret:'60', r1:'75', r2:'50', r3:'25'},
     draftOrder:blankOrder(), draftExpense:blankExpense()
   };
 }
@@ -310,7 +311,7 @@ function migrate(s){
   const d = defaults();
   if(!s || typeof s !== 'object') return d;
   for(const k of Object.keys(d)) if(s[k] == null) s[k] = d[k];
-  for(const k of ['settings','event']) for(const j of Object.keys(d[k])) if(s[k][j] == null) s[k][j] = d[k][j];
+  for(const k of ['settings','event','goals']) for(const j of Object.keys(d[k])) if(s[k][j] == null) s[k][j] = d[k][j];
   return s;
 }
 let S, cur = 'start';
@@ -751,6 +752,63 @@ PAGES.checklist = {
         </div>`).join('')}</section>`).join('');
   },
   outputs(){ const t = $('[data-out="ctotal"]'); if(t) t.textContent = `${cSettled()} of ${allC().length} settled.`; }
+};
+
+/* Goals: the same scenario math as the business plan, sections 12 and 13. */
+function goalPerCup(){
+  if(has(S.goals.perCup)) return {v:num(S.goals.perCup), from:'your entry'};
+  const c = S.products.length ? prodCalc(S.products[0]) : null;
+  if(c && c.profit != null && c.missing === 0) return {v:c.profit, from:'your Recipe costs (' + S.products[0].name + ')'};
+  return {v:3.5, from:'the plan\'s $3.50 scenario (fill in Recipe costs to use yours)'};
+}
+function growthRun(){
+  const g = num(S.goals.growth)/100, rho = num(S.goals.ret)/100, cap = 300000;
+  const shares = [S.goals.r1, S.goals.r1, S.goals.r2, S.goals.r2, S.goals.r3, S.goals.r3].map(x => num(x)/100);
+  let p = num(S.goals.start); const rows = [];
+  shares.forEach((r, i) => { const inv = p*r; rows.push({year:2027+i, profit:p, r, inv, pay:p-inv}); p = p*(1+g) + rho*Math.max(0, 1 - p/cap)*inv; });
+  return rows;
+}
+PAGES.goals = {
+  render(){
+    return `
+    <section class="card pinkish"><h1>Goals</h1><p class="muted">How much to sell for the income you want, and what reinvesting does over time. Same math as the business plan (sections 12 and 13). These are scenarios: change any number.</p></section>
+    <section class="card">
+      <h2>What it takes</h2>
+      <div class="grid3">
+        ${field('Pay you want each month, before income tax ($)', inp('goals.pay', {num:true}))}
+        ${field('Share of profit you reinvest (%)', inp('goals.reinvest', {num:true}))}
+        ${field('Profit per cup ($, blank = from Recipe costs)', inp('goals.perCup', {num:true, ph:'auto'}))}
+        ${field('Fixed costs each month ($)', inp('goals.fixed', {num:true}))}
+        ${field('Cups you sell at one pop-up', inp('goals.cupsPerEvent', {num:true}))}
+      </div>
+      <div data-out="goalout"></div>
+    </section>
+    <section class="card">
+      <h2>Reinvesting to 2032</h2>
+      <div class="grid3">
+        ${field('Business profit in 2027 ($ a year)', inp('goals.start', {num:true}))}
+        ${field('Growth on its own each year (%)', inp('goals.growth', {num:true}))}
+        ${field('Profit each reinvested $1 adds yearly (cents)', inp('goals.ret', {num:true}))}
+        ${field('Reinvest in 2027 and 2028 (%)', inp('goals.r1', {num:true}))}
+        ${field('Reinvest in 2029 and 2030 (%)', inp('goals.r2', {num:true}))}
+        ${field('Reinvest in 2031 and 2032 (%)', inp('goals.r3', {num:true}))}
+      </div>
+      <div data-out="growthout"></div>
+      <p class="note">Each year, check: did last year's reinvested money raise profit by at least 40 cents per dollar? If not, reinvest less and pay yourself more. Keep about three months of fixed costs as a cushion first.</p>
+    </section>`;
+  },
+  outputs(){
+    const pc = goalPerCup(), r = Math.min(num(S.goals.reinvest), 95)/100;
+    const need = num(S.goals.pay) / (1 - r);
+    const perWeek = pc.v > 0 ? (need + num(S.goals.fixed)) / (pc.v * 4.33) : 0;
+    const ev = num(S.goals.cupsPerEvent);
+    const o = $('[data-out="goalout"]');
+    if(o) o.innerHTML = `<div class="tiles">${tile('Business profit needed a month', money(need))}${tile('Cups a week', Math.ceil(perWeek))}${tile('Cups a day (6 days)', Math.ceil(perWeek/6))}${tile('Pop-ups a month at that size', ev > 0 ? Math.ceil(perWeek*4.33/ev) : 'n/a')}</div>
+      <p class="note">Profit per cup used: ${money(pc.v)}, from ${h(pc.from)}. ${perWeek > 300 ? '<span class="flag">Above about 300 cups a week</span> you will likely need a helper and more kitchen time; the plan adds about $2,700 a month in costs at that stage, so raise fixed costs here to see the real number.' : 'Pop-up counts ignore license fees; see the plan, section 12.'}</p>`;
+    const rows = growthRun(), g = $('[data-out="growthout"]');
+    const tot = rows.reduce((s,x) => s + x.pay, 0);
+    if(g) g.innerHTML = `<div class="tw" style="margin-top:12px"><table><thead><tr><th>Year</th><th class="n">Business profit</th><th class="n">Reinvested</th><th class="n">Your pay</th></tr></thead><tbody>${rows.map(x => `<tr><td>${x.year}</td><td class="n">${money(x.profit)}</td><td class="n">${Math.round(x.r*100)}%: ${money(x.inv)}</td><td class="n">${money(x.pay)}</td></tr>`).join('')}<tr class="total"><td>Total pay 2027 to 2032</td><td></td><td></td><td class="n">${money(tot)}</td></tr></tbody></table></div>`;
+  }
 };
 
 PAGES.contacts = {
